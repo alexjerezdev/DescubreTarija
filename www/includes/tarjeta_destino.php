@@ -1,4 +1,10 @@
 <?php
+/** @var array $d  destino: id, nombre, ubicacion, descripcion, categoria, foto */
+// Tarjeta de destino reutilizable. Se incluye dentro de un foreach con la variable $d.
+$foto = foto_url($d['foto'] ?? null);
+?>
+
+<?php
 // Tarjeta de destino reutilizable. Se incluye dentro de un foreach con la variable $d.
 $foto = foto_url($d['foto'] ?? null);
 ?>
