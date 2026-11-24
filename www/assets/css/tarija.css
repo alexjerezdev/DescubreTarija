@@ -1,0 +1,105 @@
+/* ===== DescubreTarija · estilo base ===== */
+:root {
+  --verde: #1f3d2b;
+  --verde-medio: #2f5d44;
+  --beige: #f3ead7;
+  --beige-claro: #faf6ec;
+  --dorado: #c9a24b;
+  --dorado-oscuro: #a9852f;
+  --blanco: #ffffff;
+  --texto: #25302a;
+  --gris: #6b756e;
+  --radio: 18px;
+  --sombra: 0 6px 24px rgba(31, 61, 43, .12);
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--texto);
+  background: var(--beige-claro);
+  line-height: 1.6;
+}
+h1, h2, h3, h4, .logo { font-family: 'Playfair Display', Georgia, serif; }
+h1, h2, h3 { color: var(--verde); }
+a { color: var(--verde-medio); }
+a:hover { color: var(--dorado-oscuro); }
+
+/* ---- Logo ---- */
+.logo { font-size: 1.5rem; font-weight: 700; color: var(--blanco); text-decoration: none; }
+.logo span { color: var(--dorado); }
+
+/* ---- Navbar ---- */
+.navbar-tarija { background: var(--verde); box-shadow: 0 2px 12px rgba(0, 0, 0, .2); }
+.navbar-tarija .nav-link { color: rgba(255, 255, 255, .8); font-weight: 500; transition: color .2s; }
+.navbar-tarija .nav-link:hover,
+.navbar-tarija .nav-link.active { color: var(--dorado); }
+.navbar-tarija .navbar-toggler { border-color: rgba(255, 255, 255, .4); }
+.navbar-tarija .navbar-toggler-icon { filter: invert(1); }
+
+/* ---- Botones ---- */
+.btn-dorado {
+  background: var(--dorado); color: var(--verde); font-weight: 600; border: 0;
+  border-radius: 999px; padding: .5rem 1.2rem; transition: transform .2s, background .2s;
+}
+.btn-dorado:hover { background: var(--dorado-oscuro); color: var(--blanco); transform: translateY(-2px); }
+.btn-verde {
+  background: var(--verde); color: var(--blanco); border: 0; border-radius: 999px;
+  padding: .5rem 1.2rem; transition: transform .2s, background .2s;
+}
+.btn-verde:hover { background: var(--verde-medio); color: var(--blanco); transform: translateY(-2px); }
+.btn-outline-light { border-radius: 999px; }
+
+/* ---- Hero ---- */
+.hero {
+  background:
+    linear-gradient(rgba(31, 61, 43, .72), rgba(31, 61, 43, .72)),
+    url('/assets/images/hero.jpg') center / cover no-repeat,
+    var(--verde);
+  color: var(--blanco);
+  padding: 6rem 0 5rem;
+  text-align: center;
+}
+.hero h1 { color: var(--blanco); font-size: clamp(2rem, 5vw, 3.4rem); }
+.hero p { color: var(--beige); font-size: 1.15rem; }
+
+/* ---- Títulos de sección ---- */
+.seccion-titulo { position: relative; padding-bottom: .6rem; margin-bottom: 1.5rem; }
+.seccion-titulo::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 70px; height: 4px; border-radius: 2px; background: var(--dorado);
+}
+
+/* ---- Tarjeta de destino ---- */
+.tarjeta-destino {
+  background: var(--blanco); border: 0; border-radius: var(--radio); overflow: hidden;
+  box-shadow: var(--sombra); transition: transform .25s, box-shadow .25s; height: 100%;
+}
+.tarjeta-destino:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(31, 61, 43, .2); }
+.tarjeta-destino .foto {
+  height: 200px; background: var(--beige) center / cover no-repeat;
+  display: flex; align-items: center; justify-content: center; color: var(--gris);
+}
+.tarjeta-destino .card-body { padding: 1.1rem 1.2rem 1.3rem; }
+.tarjeta-destino .card-title { font-size: 1.25rem; color: var(--verde); }
+
+/* ---- Chip de categoría ---- */
+.chip-categoria {
+  display: inline-block; background: var(--beige); color: var(--verde);
+  border: 1px solid var(--dorado); border-radius: 999px;
+  padding: .15rem .8rem; font-size: .8rem; font-weight: 600; text-decoration: none;
+}
+a.chip-categoria:hover { background: var(--dorado); color: var(--verde); }
+
+/* ---- Formularios ---- */
+.form-control:focus, .form-select:focus {
+  border-color: var(--dorado); box-shadow: 0 0 0 .2rem rgba(201, 162, 75, .25);
+}
+
+/* ---- Footer ---- */
+.footer-tarija { background: var(--verde); color: rgba(255, 255, 255, .8); }
+
+/* ---- Móvil ---- */
+@media (max-width: 576px) {
+  .hero { padding: 4rem 0 3rem; }
+  .tarjeta-destino .foto { height: 170px; }
+}
