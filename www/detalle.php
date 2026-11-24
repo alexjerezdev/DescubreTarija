@@ -124,6 +124,41 @@ require __DIR__ . '/includes/header.php';
       <?php else: ?>
         <a class="btn btn-outline-danger" href="/login.php"><i class="bi bi-heart"></i> Inicia sesión para guardar</a>
       <?php endif; ?>
+
+      
+      <?php if (esta_logueado()): ?>
+        <?php
+          $mis = $pdo->prepare(
+              'SELECT r.id, r.nombre,
+                      (SELECT COUNT(*) FROM recorrido_destinos x
+                        WHERE x.recorrido_id = r.id AND x.destino_id = ?) AS ya
+               FROM recorridos r WHERE r.usuario_id = ? ORDER BY r.id DESC'
+          );
+          $mis->execute([$d['id'], usuario_actual()['id']]);
+          $mis_recorridos = $mis->fetchAll();
+        ?>
+        <div class="mt-4 p-3 bg-white rounded-4 shadow-sm">
+          <h2 class="h6 mb-2"><i class="bi bi-signpost-split"></i> Agregar a un recorrido</h2>
+          <?php if ($mis_recorridos): ?>
+            <form method="post" action="/recorrido_accion.php" class="d-flex gap-2">
+              <?= csrf_campo() ?>
+              <input type="hidden" name="accion" value="agregar">
+              <input type="hidden" name="destino_id" value="<?= (int) $d['id'] ?>">
+              <input type="hidden" name="volver" value="<?= e($_SERVER['REQUEST_URI'] ?? '/destinos.php') ?>">
+              <select name="recorrido_id" class="form-select form-select-sm" aria-label="Recorrido">
+                <?php foreach ($mis_recorridos as $mr): ?>
+                  <option value="<?= (int) $mr['id'] ?>"<?= $mr['ya'] ? ' disabled' : '' ?>>
+                    <?= e($mr['nombre']) ?><?= $mr['ya'] ? ' (ya incluido)' : '' ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+              <button class="btn btn-verde btn-sm" type="submit">Agregar</button>
+            </form>
+          <?php else: ?>
+            <p class="small mb-0">Aún no tienes recorridos. <a href="/recorridos.php">Crea el primero</a>.</p>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 

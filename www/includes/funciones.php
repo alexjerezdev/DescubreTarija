@@ -146,3 +146,48 @@ function favoritos_ids(PDO $pdo): array
     }
     return $ids;
 }
+
+
+// ---- Fase 6: recorridos ----
+
+// Devuelve el recorrido SOLO si pertenece al usuario de la sesión (si no, null)
+function recorrido_propio(PDO $pdo, int $id): ?array
+{
+    $c = $pdo->prepare('SELECT * FROM recorridos WHERE id = ? AND usuario_id = ?');
+    $c->execute([$id, usuario_actual()['id'] ?? 0]);
+    return $c->fetch() ?: null;
+}
+
+// 2026-12-05 -> 05/12/2026
+function fecha_es(?string $fecha, string $vacio = 'Sin fecha'): string
+{
+    if (!$fecha) {
+        return $vacio;
+    }
+    $f = DateTime::createFromFormat('Y-m-d', $fecha);
+    return $f ? $f->format('d/m/Y') : $vacio;
+}
+
+// IDs de destino de un recorrido, en su orden actual
+function ids_en_orden(PDO $pdo, int $recorrido_id): array
+{
+    $c = $pdo->prepare('SELECT destino_id FROM recorrido_destinos WHERE recorrido_id = ? ORDER BY orden, id');
+    $c->execute([$recorrido_id]);
+    return array_map('intval', $c->fetchAll(PDO::FETCH_COLUMN));
+}
+
+// Reescribe orden = 1, 2, 3... según la lista de IDs recibida
+function guardar_orden(PDO $pdo, int $recorrido_id, array $ids): void
+{
+    $u = $pdo->prepare('UPDATE recorrido_destinos SET orden = ? WHERE recorrido_id = ? AND destino_id = ?');
+    $pdo->beginTransaction();
+    try {
+        foreach (array_values($ids) as $i => $destino_id) {
+            $u->execute([$i + 1, $recorrido_id, $destino_id]);
+        }
+        $pdo->commit();
+    } catch (Throwable $ex) {
+        $pdo->rollBack();
+        throw $ex;
+    }
+}
