@@ -1,0 +1,58 @@
+/* =====================================================================
+   OPERACIÓN FOGÓN · estilo compartido de todas las páginas
+   (no hace falta tocar este archivo para aprender PHP)
+   ===================================================================== */
+:root {
+  --bg: #0d0b0a; --panel: #1a1512; --linea: #3a2a1f;
+  --fuego: #ff7a18; --oro: #ffc93c; --cian: #00e5ff; --verde: #39ff88;
+  --rojo: #ff3d5a; --texto: #f6ece4; --gris: #a8968a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 18px; line-height: 1.55;
+  background: radial-gradient(ellipse at 50% -10%, #3a1a08 0%, var(--bg) 55%) fixed;
+}
+main { max-width: 980px; margin: 0 auto; padding: 2rem 1.4rem 4rem; }
+a { color: var(--oro); }
+h1 { font-size: 2.6rem; margin: .2rem 0 .6rem; color: #fff; letter-spacing: .02em;
+     text-shadow: 0 0 18px rgba(255,122,24,.55); }
+h2 { color: var(--fuego); margin-top: 2rem; }
+.kicker { font-family: ui-monospace, Consolas, monospace; color: var(--fuego); letter-spacing: .15em; font-size: .85rem; }
+.migas { font-family: ui-monospace, Consolas, monospace; font-size: .85rem; margin-bottom: 1.2rem; }
+.migas a { color: var(--gris); text-decoration: none; }
+.tarjeta { background: var(--panel); border: 1px solid var(--linea); border-radius: 16px; padding: 1.2rem 1.4rem; margin: 1rem 0;
+           box-shadow: 0 8px 30px rgba(0,0,0,.35); }
+.tarjeta.fuego { border-color: var(--fuego); box-shadow: 0 0 24px rgba(255,122,24,.25); }
+.grande { font-size: 2.2rem; font-weight: 800; color: #fff; }
+.enorme { font-size: 4rem; font-weight: 900; color: var(--oro); line-height: 1.1; text-shadow: 0 0 22px rgba(255,201,60,.45); }
+.nota { color: var(--gris); font-size: .95rem; }
+.ok { color: var(--verde); font-weight: 700; } .mal { color: var(--rojo); font-weight: 700; }
+code, .mono { font-family: ui-monospace, Consolas, monospace; background: #000; color: var(--cian); padding: .1rem .4rem; border-radius: 6px; font-size: .92em; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+th { text-align: left; color: var(--oro); border-bottom: 2px solid var(--fuego); padding: .5rem; }
+td { padding: .5rem; border-bottom: 1px solid var(--linea); }
+tr:hover td { background: rgba(255,122,24,.07); }
+form { display: grid; gap: .8rem; }
+label { font-weight: 600; }
+input, textarea, select { font: inherit; padding: .65rem .8rem; border-radius: 10px; border: 1px solid var(--linea);
+                          background: #000; color: var(--texto); width: 100%; }
+textarea { min-height: 90px; }
+button { font: inherit; font-weight: 700; padding: .75rem 1.2rem; border-radius: 10px; border: 0; cursor: pointer;
+         background: linear-gradient(135deg, var(--fuego), #ff4d00); color: #fff; }
+button:hover { filter: brightness(1.12); }
+.chip { display: inline-block; padding: .15rem .6rem; border-radius: 99px; font-size: .8rem; font-weight: 700; }
+.chip.fuego { background: var(--fuego); color: #000; } .chip.cian { background: var(--cian); color: #000; }
+.chip.verde { background: var(--verde); color: #000; } .chip.rojo { background: var(--rojo); color: #fff; }
+.mensaje { border-left: 4px solid var(--fuego); background: #120e0c; padding: .7rem 1rem; border-radius: 0 10px 10px 0; margin: .6rem 0; }
+.mensaje small { color: var(--gris); }
+.alerta { background: rgba(255,61,90,.12); border: 1px solid var(--rojo); padding: .8rem 1rem; border-radius: 10px; }
+.mapa { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.nivel { display: block; text-decoration: none; color: inherit; background: var(--panel); border: 1px solid var(--linea);
+         border-radius: 16px; padding: 1.1rem 1.2rem; transition: transform .15s, border-color .15s; }
+.nivel:hover { transform: translateY(-4px); border-color: var(--fuego); }
+.nivel .num { font-family: ui-monospace, Consolas, monospace; color: var(--fuego); font-size: .85rem; letter-spacing: .1em; }
+.nivel b { display: block; font-size: 1.25rem; color: #fff; margin: .2rem 0; }
+.nivel span { color: var(--gris); font-size: .95rem; }
+.nivel ul { margin: .5rem 0 0; padding-left: 1.1rem; font-size: .92rem; }
+.pie { margin-top: 3rem; color: var(--gris); font-size: .85rem; text-align: center; }

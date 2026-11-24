@@ -1,0 +1,71 @@
+# =====================================================================
+#  OPERACIÓN FOGÓN · PHP desde cero
+#  Tecnología Web I · UPDS Tarija · FORJA WEB 2026
+#  M.Sc. Ing. Juan Pablo Cruz Ovando · jpcruzovando.com
+# ---------------------------------------------------------------------
+#  La cocina completa:
+#    web        -> Apache + PHP 8.3 (el mozo y el cocinero)   http://localhost:8090
+#    db         -> MySQL 8.4 (la despensa)                     127.0.0.1:3308
+#    phpmyadmin -> la ventana a la despensa                    http://localhost:8091
+#
+#  Encender:  docker compose up -d --build
+#  Apagar:    docker compose down
+#  Reiniciar la base de datos desde cero:  docker compose down -v
+# =====================================================================
+
+services:
+
+  web:
+    build: ./docker/php
+    container_name: fogon-web
+    ports:
+      - "8090:80"
+    volumes:
+      - ./www:/var/www/html          # tus archivos .php viven en la carpeta www
+    environment:
+      DB_HOST: db
+      DB_NAME: fogon
+      DB_USER: fogon
+      DB_PASS: fogon123
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.4
+    container_name: fogon-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: fogon
+      MYSQL_USER: fogon
+      MYSQL_PASSWORD: fogon123
+      TZ: America/La_Paz
+    ports:
+      - "127.0.0.1:3308:3306"        # solo accesible desde tu propia PC
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - fogon-datos:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: fogon-pma
+    ports:
+      - "8091:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: fogon
+      PMA_PASSWORD: fogon123
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  fogon-datos:
