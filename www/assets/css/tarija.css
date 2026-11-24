@@ -103,3 +103,36 @@ a.chip-categoria:hover { background: var(--dorado); color: var(--verde); }
   .hero { padding: 4rem 0 3rem; }
   .tarjeta-destino .foto { height: 170px; }
 }
+
+
+/* ===== Fase 3 ===== */
+.buscador-hero { max-width: 640px; margin: 1.6rem auto 1rem; }
+.buscador-hero .form-control { border: 0; border-radius: 999px 0 0 999px; padding: .85rem 1.3rem; }
+.buscador-hero .btn { border-radius: 0 999px 999px 0; padding-left: 1.6rem; padding-right: 1.6rem; }
+
+.categoria-box {
+  display: block; height: 100%; text-align: center; text-decoration: none;
+  background: var(--blanco); color: var(--verde); border-radius: var(--radio);
+  box-shadow: var(--sombra); padding: 1.3rem 1rem; transition: transform .25s, box-shadow .25s;
+}
+.categoria-box:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(31, 61, 43, .2); color: var(--verde); }
+.categoria-box i { font-size: 2rem; color: var(--dorado); }
+.categoria-box .nombre { font-weight: 600; margin-top: .3rem; }
+.categoria-box .total { font-size: .8rem; color: var(--gris); }
+
+.filtros { background: var(--blanco); border-radius: var(--radio); box-shadow: var(--sombra); padding: 1.1rem 1.3rem; }
+
+.vacio {
+  text-align: center; padding: 3rem 1rem; background: var(--blanco);
+  border-radius: var(--radio); box-shadow: var(--sombra); color: var(--gris);
+}
+.vacio i { font-size: 3rem; color: var(--dorado); }
+
+.galeria .foto-grande { height: 380px; object-fit: cover; }
+.galeria-vacia {
+  height: 380px; background: var(--beige); border-radius: var(--radio);
+  display: flex; align-items: center; justify-content: center; color: var(--gris);
+}
+
+.mapa { height: 420px; border-radius: var(--radio); box-shadow: var(--sombra); z-index: 0; }
+.mapa-grande { height: 70vh; min-height: 420px; }

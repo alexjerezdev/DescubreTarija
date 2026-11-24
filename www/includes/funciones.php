@@ -69,3 +69,30 @@ function nav_activo(string $pagina, string $activo): string
 {
     return $pagina === $activo ? ' active' : '';
 }
+
+
+
+// ---- Consulta base de destinos (con categoría y primera foto) ----
+// Uso: $pdo->query(SQL_DESTINOS . ' WHERE d.destacado = 1 ORDER BY d.nombre')
+const SQL_DESTINOS = 'SELECT d.id, d.nombre, d.descripcion, d.ubicacion, d.categoria_id,
+        c.nombre AS categoria,
+        (SELECT i.url FROM imagenes i WHERE i.destino_id = d.id ORDER BY i.id LIMIT 1) AS foto
+    FROM destinos d
+    LEFT JOIN categorias c ON c.id = d.categoria_id';
+
+// Si el dato es NULL, vacío o "POR VERIFICAR", devuelve un texto alternativo
+function dato($texto, string $vacio = 'Por verificar'): string
+{
+    $texto = trim((string) $texto);
+    return ($texto === '' || strcasecmp($texto, 'POR VERIFICAR') === 0) ? $vacio : $texto;
+}
+
+// Devuelve la URL de la foto SOLO si el archivo existe en www/ (si no, null)
+function foto_url(?string $ruta): ?string
+{
+    if (!$ruta || str_contains($ruta, '..')) {
+        return null;
+    }
+    $ruta = ltrim($ruta, '/');
+    return is_file(__DIR__ . '/../' . $ruta) ? '/' . $ruta : null;
+}
