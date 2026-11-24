@@ -14,7 +14,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "  Esperando a que la despensa (MySQL) este lista..." -ForegroundColor DarkGray
 for ($i = 0; $i -lt 60; $i++) {
-    $estado = docker inspect -f "{{.State.Health.Status}}" fogon-db 2>$null
+    $estado = docker inspect -f "{{.State.Health.Status}}" tarija-db 2>$null
     if ($estado -eq "healthy") { break }
     Start-Sleep -Seconds 2
 }

@@ -6,7 +6,7 @@ echo "  OPERACIÓN FOGÓN · encendiendo la cocina..."
 docker compose up -d --build
 echo -n "  Esperando a la despensa (MySQL)"
 for _ in $(seq 1 60); do
-  [ "$(docker inspect -f '{{.State.Health.Status}}' fogon-db 2>/dev/null)" = "healthy" ] && break
+  [ "$(docker inspect -f '{{.State.Health.Status}}' tarija-db 2>/dev/null)" = "healthy" ] && break
   echo -n "."; sleep 2
 done
 echo
