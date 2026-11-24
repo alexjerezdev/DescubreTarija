@@ -109,9 +109,21 @@ require __DIR__ . '/includes/header.php';
         <div class="alert alert-warning small"><i class="bi bi-info-circle"></i> La información de este destino está en proceso de verificación.</div>
       <?php endif; ?>
 
-      <button class="btn btn-outline-danger" type="button" disabled title="Se activa en la Fase 5">
-        <i class="bi bi-heart"></i> Guardar en favoritos
-      </button>
+            <?php $es_fav = in_array((int) $d['id'], favoritos_ids($pdo), true); ?>
+      <?php if (esta_logueado()): ?>
+        <form method="post" action="/favorito.php" class="d-inline">
+          <?= csrf_campo() ?>
+          <input type="hidden" name="destino_id" value="<?= (int) $d['id'] ?>">
+          <input type="hidden" name="accion" value="<?= $es_fav ? 'quitar' : 'agregar' ?>">
+          <input type="hidden" name="volver" value="<?= e($_SERVER['REQUEST_URI'] ?? '/destinos.php') ?>">
+          <button type="submit" class="btn <?= $es_fav ? 'btn-danger' : 'btn-outline-danger' ?>">
+            <i class="bi <?= $es_fav ? 'bi-heart-fill' : 'bi-heart' ?>"></i>
+            <?= $es_fav ? 'Quitar de favoritos' : 'Guardar en favoritos' ?>
+          </button>
+        </form>
+      <?php else: ?>
+        <a class="btn btn-outline-danger" href="/login.php"><i class="bi bi-heart"></i> Inicia sesión para guardar</a>
+      <?php endif; ?>
     </div>
   </div>
 

@@ -2,6 +2,7 @@
 // Funciones compartidas. Inicia la sesión una sola vez.
 
 if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax']);
     session_start();
 }
 
@@ -95,4 +96,53 @@ function foto_url(?string $ruta): ?string
     }
     $ruta = ltrim($ruta, '/');
     return is_file(__DIR__ . '/../' . $ruta) ? '/' . $ruta : null;
+}
+
+
+// ---- Fase 5: favoritos y formularios seguros ----
+
+// Token CSRF: se genera una vez por sesión y se envía oculto en cada formulario que modifica datos
+function csrf_token(): string
+{
+    if (empty($_SESSION['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf'];
+}
+
+function csrf_campo(): string
+{
+    return '<input type="hidden" name="csrf" value="' . e(csrf_token()) . '">';
+}
+
+function csrf_valido(): bool
+{
+    return isset($_POST['csrf'], $_SESSION['csrf'])
+        && hash_equals($_SESSION['csrf'], (string) $_POST['csrf']);
+}
+
+// Solo permite volver a rutas internas del sitio (evita "open redirect")
+function volver_seguro($ruta, string $por_defecto): string
+{
+    $ruta = is_string($ruta) ? $ruta : '';
+    if ($ruta === '' || $ruta[0] !== '/' || str_starts_with($ruta, '//')
+        || str_contains($ruta, '\\') || preg_match('/[\r\n]/', $ruta)) {
+        return $por_defecto;
+    }
+    return $ruta;
+}
+
+// IDs de los destinos favoritos del usuario actual (una sola consulta por petición)
+function favoritos_ids(PDO $pdo): array
+{
+    static $ids = null;
+    if (!esta_logueado()) {
+        return [];
+    }
+    if ($ids === null) {
+        $c = $pdo->prepare('SELECT destino_id FROM favoritos WHERE usuario_id = ?');
+        $c->execute([usuario_actual()['id']]);
+        $ids = array_map('intval', $c->fetchAll(PDO::FETCH_COLUMN));
+    }
+    return $ids;
 }
