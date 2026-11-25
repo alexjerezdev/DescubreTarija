@@ -48,8 +48,10 @@ $usuario = usuario_actual();
       <div class="d-flex align-items-center gap-2">
         <?php if ($usuario): ?>
           <span class="text-white-50 small"><i class="bi bi-person-circle"></i> <?= e($usuario['nombre']) ?></span>
-          <a class="btn btn-sm btn-outline-light" href="/logout.php">Salir</a>
-        <?php else: ?>
+<form method="post" action="/logout.php" class="d-inline">
+            <?= csrf_campo() ?>
+            <button class="btn btn-sm btn-outline-light" type="submit">Salir</button>
+          </form>        <?php else: ?>
           <a class="btn btn-sm btn-outline-light" href="/login.php">Ingresar</a>
           <a class="btn btn-sm btn-dorado" href="/registro.php">Registrarme</a>
         <?php endif; ?>

@@ -1,48 +1,47 @@
-# 🔥 OPERACIÓN FOGÓN · PHP desde cero
+# DescubreTarija
 
-**Tecnología Web I · UPDS Tarija · FORJA WEB 2026**
-M.Sc. Ing. Juan Pablo Cruz Ovando · jpcruzovando.com
+Guía turística digital del departamento de Tarija, Bolivia.
+Proyecto académico de **Tecnología Web I** · Ingeniería en Sistemas · Universidad Privada Domingo Savio (UPDS).
 
-Hoy el cocinero entra a la cocina: **Apache** es el mozo, **PHP** el cocinero y **MySQL** la despensa.
+## Qué hace
+- Catálogo de destinos con buscador y filtros (nombre, categoría, ubicación).
+- Detalle con galería y mapa interactivo (Leaflet + OpenStreetMap).
+- Registro, login y sesiones (contraseñas con `password_hash`).
+- Favoritos y planificador de recorridos con orden y mapa.
+- Panel administrativo: destinos, categorías e imágenes.
 
-## Encender (Windows)
-1. Abrí **Docker Desktop** (ballena verde).
-2. En esta carpeta: clic derecho → **Abrir en Terminal** y escribí:
-   ```powershell
-   Set-ExecutionPolicy -Scope Process Bypass
-   .\scripts\iniciar.ps1
-   ```
-3. Abrí **http://localhost:8090**.
+## Tecnologías
+PHP 8.3 (Apache) · MySQL 8.4 · PDO · Bootstrap 5 · Leaflet · Docker Compose · phpMyAdmin.
 
-| Qué | Dónde |
-|---|---|
-| La cocina (tus páginas) | http://localhost:8090 |
-| La despensa (phpMyAdmin) | http://localhost:8091 · usuario `fogon` · clave `fogon123` |
-| Tus archivos | carpeta `www` (abrila con VS Code) |
-| MySQL desde Workbench | `127.0.0.1:3308` · `fogon` / `fogon123` |
+## Cómo ejecutarlo
+Requisitos: Docker Desktop.
 
-## Los niveles
-| Carpeta | Nivel | Qué aprendés |
-|---|---|---|
-| `www/00-gancho` | 0 | Por qué PHP: HTML estático vs. página viva |
-| `www/01-hablar` | 1 | `echo`, variables, comillas, cuentas |
-| `www/02-decidir` | 2 | `if`, arrays, `foreach` |
-| `www/03-escuchar` | 3 | Formularios: `$_GET` y `$_POST` |
-| `www/04-recordar` | 4 | MySQL con PDO: leer (`SELECT`) y guardar (`INSERT`) |
-| `www/05-errores` | Museo | Los 5 errores que todos cometen |
-| `www/06-reto-final` | Jefe final | Formulario de contacto para tu proyecto |
-| `www/soluciones` | — | Soluciones de los retos (¡intentá antes!) |
-
-## Comandos útiles
 ```powershell
-docker compose ps                 # ¿qué está encendido?
-docker compose logs web           # ¿qué dice el servidor?
-.\scripts\reiniciar-base.ps1      # volver la base de datos a cero
-.\scripts\apagar.ps1              # apagar (tus archivos quedan)
-.\scripts\plan-b-sin-base.ps1     # plan B: solo PHP, sin MySQL (niveles 0 a 3)
+git clone https://github.com/alexjerezdev/DescubreTarija.git
+cd DescubreTarija
+.\scripts\iniciar.ps1
 ```
 
-## Si algo falla
-- **El puerto 8090, 8091 o 3308 está ocupado:** cambiá el número de la izquierda en `docker-compose.yml` (por ejemplo, `"8095:80"`).
-- **"La despensa está cerrada":** la base tarda unos segundos en arrancar la primera vez. Esperá y recargá.
-- **Cambié `db/init.sql` y no pasa nada:** ese archivo solo se lee la primera vez. Usá `reiniciar-base.ps1`.
+| Servicio | URL |
+|---|---|
+| Sitio web | http://localhost:8090 |
+| phpMyAdmin | http://localhost:8091 |
+| MySQL (externo) | 127.0.0.1:3308 |
+
+Usuarios de prueba: `admin@descubretarija.bo` / `Admin2026!` y `maria@correo.com` / `Demo2026!`
+(solo para demostración).
+
+Apagar: `.\scripts\apagar.ps1` · Base desde cero: `.\scripts\reiniciar-base.ps1`
+
+## Estructura
+- `www/` páginas PHP, `includes/` piezas comunes, `admin/` panel, `assets/` estilos e imágenes
+- `db/init.sql` esquema y datos iniciales (7 tablas)
+- `bd/` consultas de la tarea y respaldo
+- `scripts/` encendido, apagado y pruebas
+
+## Datos turísticos
+Descripciones, ubicaciones y coordenadas se cargan solo cuando están verificadas con fuentes confiables.
+El mapa muestra únicamente destinos con coordenadas verificadas.
+
+## Autor
+Alex Jerez · UPDS Tarija · 2026

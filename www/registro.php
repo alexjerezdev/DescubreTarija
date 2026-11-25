@@ -12,7 +12,10 @@ $errores = [];
 $nombre  = '';
 $email   = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_valido()) {
+    http_response_code(400);
+    $errores[] = 'Solicitud no válida. Recarga la página e intenta de nuevo.';
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1) Recibir y limpiar
     $nombre = trim($_POST['nombre'] ?? '');
     $email  = mb_strtolower(trim($_POST['email'] ?? ''));
@@ -73,6 +76,7 @@ require __DIR__ . '/includes/header.php';
     <?php endif; ?>
 
     <form method="post" novalidate>
+            <?= csrf_campo() ?>
       <div class="mb-3">
         <label class="form-label" for="nombre">Nombre</label>
         <input id="nombre" name="nombre" class="form-control" value="<?= e($nombre) ?>" maxlength="80" autocomplete="name" required>

@@ -108,13 +108,13 @@ INSERT INTO imagenes (destino_id, url, descripcion) VALUES
 (5, 'assets/images/san-jacinto-1.jpg', 'Vista de la represa'),
 (9, 'assets/images/museo-paleo-1.jpg', 'Entrada del museo');
 
--- hashes falsos: se reemplazan por password_hash() real en la Fase 4
+-- se reemplazan por password_hash() real en la Fase 4
 INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES
-('Administrador DescubreTarija', 'admin@descubretarija.bo', 'HASH_DEMO_1', 'admin'),
-('María Peñaranda', 'maria@correo.com', 'HASH_DEMO_2', 'usuario'),
-('José Ñanco', 'jose@correo.com', 'HASH_DEMO_3', 'usuario'),
-('Lucía Vargas', 'lucia@correo.com', 'HASH_DEMO_4', 'usuario'),
-('Andrés Condori', 'andres@correo.com', 'HASH_DEMO_5', 'usuario');
+('Administrador DescubreTarija', 'admin@descubretarija.bo', '$2y$10$16NLujkJrwJJ4Tw4B8n1te6DHnfPgD7ClKS899aoz4At9u9sYBXwC', 'admin'),
+('María Peñaranda', 'maria@correo.com', '$2y$10$XVvMYeusd1V0VyWdDmtYYOC6TYaojJ.hsQDNnqlbPqpTHF7BxGf8u', 'usuario'),
+('José Ñanco', 'jose@correo.com', '$2y$10$XVvMYeusd1V0VyWdDmtYYOC6TYaojJ.hsQDNnqlbPqpTHF7BxGf8u', 'usuario'),
+('Lucía Vargas', 'lucia@correo.com', '$2y$10$XVvMYeusd1V0VyWdDmtYYOC6TYaojJ.hsQDNnqlbPqpTHF7BxGf8u', 'usuario'),
+('Andrés Condori', 'andres@correo.com', '$2y$10$XVvMYeusd1V0VyWdDmtYYOC6TYaojJ.hsQDNnqlbPqpTHF7BxGf8u', 'usuario');
 
 INSERT INTO favoritos (usuario_id, destino_id) VALUES
 (2, 1), (2, 4), (2, 8),
@@ -135,3 +135,10 @@ INSERT INTO recorrido_destinos (recorrido_id, destino_id, orden) VALUES
 (3, 5, 1), (3, 2, 2),
 (4, 9, 1), (4, 1, 2),
 (5, 8, 1), (5, 7, 2);
+
+-- Coordenadas verificadas
+UPDATE destinos SET latitud = -21.532670594491133,  longitud = -64.73404460229231, verificado = 1 WHERE nombre = 'Casa Dorada';
+UPDATE destinos SET latitud = -21.418267434275414,  longitud = -64.74957114774892, verificado = 1 WHERE nombre = 'San Lorenzo';
+UPDATE destinos SET latitud = -21.695925364354235,  longitud = -64.65343538984678, verificado = 1 WHERE nombre = 'Valle de la Concepción';
+UPDATE destinos SET latitud = -21.534850714974684,  longitud = -64.73499506296496, verificado = 1 WHERE nombre = 'Museo Paleontológico de Tarija';
+UPDATE destinos SET latitud = -21.704571738827557,  longitud = -64.60072317420479, verificado = 1 WHERE nombre = 'Cañón de la Angostura';

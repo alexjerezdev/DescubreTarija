@@ -10,7 +10,10 @@ if (esta_logueado()) {
 $errores = [];
 $email   = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_valido()) {
+    http_response_code(400);
+    $errores[] = 'Solicitud no válida. Recarga la página e intenta de nuevo.';
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $clave = $_POST['clave'] ?? '';
 
@@ -54,6 +57,7 @@ require __DIR__ . '/includes/header.php';
     <?php endif; ?>
 
     <form method="post" novalidate>
+            <?= csrf_campo() ?>
       <div class="mb-3">
         <label class="form-label" for="email">Correo</label>
         <input id="email" name="email" type="email" class="form-control" value="<?= e($email) ?>" autocomplete="email" required>
