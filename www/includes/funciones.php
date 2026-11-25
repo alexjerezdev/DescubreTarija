@@ -191,3 +191,17 @@ function guardar_orden(PDO $pdo, int $recorrido_id, array $ids): void
         throw $ex;
     }
 }
+
+
+// ---- Fase 7: admin ----
+
+// Borra una foto subida por el admin. Solo toca archivos dentro de assets/images/destinos/
+function borrar_archivo_subido(?string $url): void
+{
+    if ($url && preg_match('#^assets/images/destinos/[A-Za-z0-9._-]+$#', $url) && !str_contains($url, '..')) {
+        $ruta = __DIR__ . '/../' . $url;
+        if (is_file($ruta)) {
+            @unlink($ruta);
+        }
+    }
+}
